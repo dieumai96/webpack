@@ -18,7 +18,6 @@ server.use(webpackHotMiddleware);
 const staticMiddleware = express.static("dist");
 
 server.use(staticMiddleware);
-debugger
 server.listen(8080, () => {
     console.log("Server listenning");
 })
