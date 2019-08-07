@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
-        main: ["./src/main.js"]
+        main: ["./src/main.js"],
+        ts : ["./src/index.ts"]
     },
     mode: "development",
     output: {
@@ -23,6 +24,15 @@ module.exports = {
                 use: [
                     {
                         loader: "babel-loader"
+                    }
+                ],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.ts$/,
+                use: [
+                    {
+                        loader: "awesome-typescript-loader"
                     }
                 ],
                 exclude: /node_modules/
@@ -68,9 +78,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(), 
+        new webpack.HotModuleReplacementPlugin(),
         new HTMLWebpackPlugin({
-            template : "./src/index.html",
+            template: "./src/index.html",
         })
     ]
 }
