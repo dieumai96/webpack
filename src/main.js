@@ -3,3 +3,4 @@
 require("./nav.css");
 require('./main.css');
 require('./index.html');
+console.log(`Enviroment is ${process.env.NODE_ENV}`)

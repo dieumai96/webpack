@@ -5,7 +5,11 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
     entry: {
-        main: ["./src/main.js"]
+        main: [
+            // "babel-runtime/regenerator",
+            // "webpack-hot-middleware/client?reload=true",
+            "./src/main.js"
+        ]
     },
     mode: "development",
     output: {
@@ -73,7 +77,7 @@ module.exports = {
         // new webpack.HotModuleReplacementPlugin(), 
         new webpack.NamedModulesPlugin(),
         new HTMLWebpackPlugin({
-            template : "./src/index.html",
+            template: "./src/index.html",
         })
     ]
 }
