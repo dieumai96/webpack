@@ -18,7 +18,7 @@ server.use(webpackHotMiddleware);
 const staticMiddleware = express.static("dist");
 
 server.use(staticMiddleware);
-
-server.listen(8080, () => {
+const PORT = process.env.PORT || 8080
+server.listen(PORT, () => {
     console.log("Server listenning");
 })

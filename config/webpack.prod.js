@@ -1,22 +1,17 @@
 const path = require("path");
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const isProd = process.env.NODE_ENV === "production";
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
     entry: {
         main: ["./src/main.js"]
     },
-    mode: "development",
+    mode: "production",
     output: {
         filename: "[name]-bundle.js",
         path: path.resolve(__dirname, "../dist"),
         publicPath: "/"
-    },
-    devServer: {
-        contentBase: "dist",
-        overlay: true,
-        hot: true,
     },
     module: {
         rules: [
@@ -33,7 +28,7 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     {
-                        loader: "style-loader"
+                        loader: MiniCssExtractPlugin.loader
                     },
                     {
                         loader: "css-loader",
@@ -70,10 +65,9 @@ module.exports = {
         ]
     },
     plugins: [
-        // new webpack.HotModuleReplacementPlugin(), 
-        new webpack.NamedModulesPlugin(),
+        new MiniCssExtractPlugin(),
         new HTMLWebpackPlugin({
-            template : "./src/index.html",
+            template: "./src/index.html",
         })
     ]
 }
