@@ -1,7 +1,8 @@
 const path = require("path");
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const isProd = process.env.NODE_ENV === "production";
+const helpers = require('./helpers');
+const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     entry: {
@@ -10,6 +11,9 @@ module.exports = {
             // "webpack-hot-middleware/client?reload=true",
             "./src/main.js"
         ]
+    },
+    resolve: {
+        extensions: ['.ts', '.js', '.scss']
     },
     mode: "development",
     output: {
@@ -34,15 +38,22 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
+                test: /\.(css|scss|sass)$/,
                 use: [
-                    {
-                        loader: "style-loader"
-                    },
-                    {
-                        loader: "css-loader",
-                    }
-                ]
+                    { loader: 'style-loader', options: { sourceMap: isDev } },
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    { loader: 'sass-loader', options: { sourceMap: isDev } }
+                ],
+                include: helpers.root('src', 'assets')
+            },
+            {
+                test: /\.(css|scss|sass)$/,
+                use: [
+                    'to-string-loader',
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    { loader: 'sass-loader', options: { sourceMap: isDev } }
+                ],
+                include: helpers.root('src', 'app')
             },
             {
                 // HTML LOADER

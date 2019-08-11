@@ -3,7 +3,9 @@ const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const isProd = process.env.NODE_ENV === 'production'
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const helpers = require('./helpers');
+const isDev = process.env.NODE_ENV !== 'production';
 module.exports = {
     entry: {
         main: ["./src/main.js"]
@@ -26,18 +28,22 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
+                test: /\.(css|scss|sass)$/,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader
-                    },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            modules: true,
-                        }
-                    }
-                ]
+                    { loader: 'style-loader', options: { sourceMap: isDev } },
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    { loader: 'sass-loader', options: { sourceMap: isDev } }
+                ],
+                include: helpers.root('src', 'assets')
+            },
+            {
+                test: /\.(css|scss|sass)$/,
+                use: [
+                    'to-string-loader',
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    { loader: 'sass-loader', options: { sourceMap: isDev } }
+                ],
+                include: helpers.root('src', 'app')
             },
             {
                 // HTML LOADER
@@ -69,6 +75,7 @@ module.exports = {
         ]
     },
     plugins: [
+        // new ExtractTextPlugin("[name].css"),
         new OptimizeCssAssetsPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name]-[contenthash].css"
@@ -78,7 +85,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             "process.env": {
-                NODE_ENV: JSON.stringify("development")
+                NODE_ENV: JSON.stringify("production")
             }
         }),
     ]
