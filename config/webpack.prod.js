@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
     entry: {
@@ -32,6 +33,9 @@ module.exports = {
                     },
                     {
                         loader: "css-loader",
+                        options: {
+                            modules: true,
+                        }
                     }
                 ]
             },
@@ -65,7 +69,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin(),
+        new OptimizeCssAssetsPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name]-[contenthash].css"
+        }),
         new HTMLWebpackPlugin({
             template: "./src/index.html",
         })
