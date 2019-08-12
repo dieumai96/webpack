@@ -1,16 +1,21 @@
 const path = require("path");
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const helpers = require('./helpers');
 const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     entry: {
+        // vendor: './src/vendor.ts',
+        // polyfills: './src/polyfills.ts',
         main: [
-            // "babel-runtime/regenerator",
-            // "webpack-hot-middleware/client?reload=true",
             "./src/main.js"
-        ]
+        ],
+        angular: [
+            "./src/angular"
+        ],
+        polyfills: ["./src/angular-polyfills"],
     },
     resolve: {
         extensions: ['.ts', '.js', '.scss']
@@ -24,6 +29,7 @@ module.exports = {
     devServer: {
         contentBase: "dist",
         overlay: true,
+        historyApiFallback: true,
         hot: true,
     },
     module: {
@@ -85,8 +91,13 @@ module.exports = {
         ]
     },
     plugins: [
-        // new webpack.HotModuleReplacementPlugin(), 
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
+        new webpack.ContextReplacementPlugin(
+            /\@angular(\\|\/)core(\\|\/)fesm5/,
+            helpers.root('./src'),
+            {}
+        ),
         new HTMLWebpackPlugin({
             template: "./src/index.html",
         })
