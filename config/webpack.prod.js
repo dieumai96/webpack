@@ -13,13 +13,18 @@ const isDev = process.env.NODE_ENV !== 'production';
 module.exports = env => {
     return {
         entry: {
+
             main: [
                 "./src/main.js"
             ],
-            polyfills: "./src/angular-polyfills",
-            angular: "./src/angular",
+            polyfills: helpers.root('src') + '/angular-polyfills',
+            angular: helpers.root('src') + '/angular',
+        },
+        resolve: {
+            extensions: ['.ts', '.js', '.scss']
         },
         mode: "production",
+
         output: {
             filename: "[name]-bundle.js",
             path: path.resolve(__dirname, "../dist"),
@@ -35,6 +40,20 @@ module.exports = env => {
                         }
                     ],
                     exclude: /node_modules/
+                },
+                {
+                    test: /\.ts$/,
+                    loaders: [
+                        {
+                            loader: 'awesome-typescript-loader',
+                            options: {
+                                configFileName: helpers.root('tsconfig.json')
+                            }
+                        },
+                        'angular2-template-loader',
+                        'angular-router-loader'
+                    ],
+                    exclude: [/node_modules/]
                 },
                 {
                     test: /\.(css|scss|sass)$/,
@@ -79,14 +98,12 @@ module.exports = env => {
                         },
                     ],
                 },
-                {
-                    test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-                    loader: '@ngtools/webpack'
-                }
+               
             ]
         },
         plugins: [
             // new ExtractTextPlugin("[name].css"),
+            new webpack.HotModuleReplacementPlugin(),
             new OptimizeCSSAssetsPlugin(),
             new MiniCssExtractPlugin({
                 filename: "[name]-[contenthash].css"
@@ -104,14 +121,6 @@ module.exports = env => {
                 cache: true,
                 parallel: true
             }),
-            new CompressionPlugin({
-                algorithm: "gzip"
-            }),
-            new BrotliPlugin(),
-            new ngw.AngularCompilerPlugin({
-                tsConfigPath: helpers.root('tsconfig.aot.json'),
-                entryModule: helpers.root('src', 'app', 'app.module#AppModule')
-            })
         ]
     }
 
