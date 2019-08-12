@@ -27,9 +27,9 @@ module.exports = {
         publicPath: "/"
     },
     devServer: {
+        historyApiFallback: true,
         contentBase: "dist",
         overlay: true,
-        historyApiFallback: true,
         hot: true,
     },
     module: {
@@ -45,12 +45,17 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                use: [
+                loaders: [
                     {
-                        loader: "awesome-typescript-loader"
-                    }
+                        loader: 'awesome-typescript-loader',
+                        options: {
+                            configFileName: helpers.root('tsconfig.json')
+                        }
+                    },
+                    'angular2-template-loader',
+                    'angular-router-loader'
                 ],
-                exclude: /node_modules/,
+                exclude: [/node_modules/]
             },
             {
                 test: /\.(css|scss|sass)$/,
@@ -95,6 +100,10 @@ module.exports = {
                     },
                 ],
             },
+            // {
+            //     test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+            //     loader: '@ngtools/webpack'
+            // }
         ]
     },
     plugins: [
@@ -107,6 +116,7 @@ module.exports = {
         ),
         new HTMLWebpackPlugin({
             template: "./src/index.html",
+            inject: true
         })
     ]
 }

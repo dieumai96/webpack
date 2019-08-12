@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config=config/webpack.dev.js",
+    "start": "webpack-dev-server --hot --inline --config=config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config=config/webpack.prod.js --env.NODE_ENV=production",
     "build:dev": "cross-env NODE_ENV=production webpack --config=config/webpack.dev.js",
     "dev": "nodemon --inspect --watch config --watch src/server  src/server/main.js",
@@ -64,6 +64,8 @@
     "zone.js": "^0.10.1"
   },
   "devDependencies": {
+    "@angular/cli": "^7.3.9",
+    "@ngtools/webpack": "^7.3.9",
     "@types/core-js": "^2.5.2",
     "@types/node": "^12.7.1",
     "angular-router-loader": "~0.8",
