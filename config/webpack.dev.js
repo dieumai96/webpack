@@ -101,8 +101,8 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.ContextReplacementPlugin(
-            /\@angular(\\|\/)core(\\|\/)fesm5/,
-            helpers.root('./src'),
+            /\@angular(\\|\/)core/,
+            path.join(__dirname, "./src"),
             {}
         ),
         new HTMLWebpackPlugin({

@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
+        "baseUrl": "src",
         "module": "commonjs",
-        "moduleResolution": "classic",
+        "moduleResolution": "node",
         "target": "es5",
         "allowJs": true,
         "lib": [
