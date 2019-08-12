@@ -12,10 +12,10 @@ module.exports = {
         main: [
             "./src/main.js"
         ],
+        polyfills: ["./src/angular-polyfills"],
         angular: [
             "./src/angular"
         ],
-        polyfills: ["./src/angular-polyfills"],
     },
     resolve: {
         extensions: ['.ts', '.js', '.scss']
@@ -50,7 +50,7 @@ module.exports = {
                         loader: "awesome-typescript-loader"
                     }
                 ],
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.(css|scss|sass)$/,
