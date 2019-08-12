@@ -16,6 +16,8 @@ module.exports = {
         angular: [
             "./src/angular"
         ],
+        // angular: isDev ? './src/angular.ts' : './src/angular.aot.ts',
+        // polyfills: './src/angular-polyfills',
     },
     resolve: {
         extensions: ['.ts', '.js', '.scss']

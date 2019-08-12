@@ -2,17 +2,22 @@ const path = require("path");
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin')
 const BrotliPlugin = require('brotli-webpack-plugin');
+const ngw = require('@ngtools/webpack');
 const helpers = require('./helpers');
 const isDev = process.env.NODE_ENV !== 'production';
 module.exports = env => {
     return {
         entry: {
-            main: ["./src/main.js"]
+            main: [
+                "./src/main.js"
+            ],
+            polyfills: "./src/angular-polyfills",
+            angular: "./src/angular",
         },
         mode: "production",
         output: {
@@ -74,13 +79,15 @@ module.exports = env => {
                         },
                     ],
                 },
-
-
+                {
+                    test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+                    loader: '@ngtools/webpack'
+                }
             ]
         },
         plugins: [
             // new ExtractTextPlugin("[name].css"),
-            new OptimizeCssAssetsPlugin(),
+            new OptimizeCSSAssetsPlugin(),
             new MiniCssExtractPlugin({
                 filename: "[name]-[contenthash].css"
             }),
@@ -93,11 +100,18 @@ module.exports = env => {
                 }
             }),
             // new MinifyPlugin()
-            new UglifyJSPlugin(),
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true
+            }),
             new CompressionPlugin({
                 algorithm: "gzip"
             }),
-            new BrotliPlugin()
+            new BrotliPlugin(),
+            new ngw.AngularCompilerPlugin({
+                tsConfigPath: helpers.root('tsconfig.aot.json'),
+                entryModule: helpers.root('src', 'app', 'app.module#AppModule')
+            })
         ]
     }
 
