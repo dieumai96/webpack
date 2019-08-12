@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MinifyPlugin = require('babel-minify-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const helpers = require('./helpers');
 const isDev = process.env.NODE_ENV !== 'production';
 module.exports = env => {
@@ -89,6 +90,8 @@ module.exports = env => {
                     NODE_ENV: JSON.stringify(env.NODE_ENV)
                 }
             }),
+            // new MinifyPlugin()
+            new UglifyJSPlugin()
         ]
     }
 
