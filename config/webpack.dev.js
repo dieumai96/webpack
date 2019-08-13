@@ -1,5 +1,5 @@
 const path = require("path");
-const webpack = require('webpack');
+const { ContextReplacementPlugin, NamedModulesPlugin, HotModuleReplacementPlugin } = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const helpers = require('./helpers');
@@ -89,7 +89,7 @@ module.exports = {
             },
             // image loader
             {
-                test: /\.(png|jpg|gif|woff(2)?|ttf|eot|svg)$/,
+                test: /\.(png|jpg|gif|ico|woff(2)?|ttf|eot|svg)$/,
                 exclude: [
                     /\.(js|jsx|mjs)$/,
                     /\.html$/,
@@ -109,15 +109,16 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new webpack.ContextReplacementPlugin(
+        new HotModuleReplacementPlugin(),
+        new NamedModulesPlugin(),
+        new ContextReplacementPlugin(
             /\@angular(\\|\/)core/,
             path.join(__dirname, "./src"),
             {}
         ),
         new HTMLWebpackPlugin({
             template: "./src/index.html",
+            favicon: "./src/favicon.png",
             inject: true
         })
     ]
