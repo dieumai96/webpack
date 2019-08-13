@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-root',
     moduleId: module.id.toString(),
     template: `<router-outlet></router-outlet>
+    <button class = "btn btn-primary">Tao day</button>
     `,
 })
 export class AppComponent implements OnInit {

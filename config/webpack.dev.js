@@ -92,7 +92,13 @@ module.exports = {
                 test: /\.(css|scss|sass)$/,
                 use: [
                     { loader: 'style-loader', options: { sourceMap: isDev } },
-                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: isDev,
+                          },
+                    },
+                    'resolve-url-loader',
                     {
                         loader: 'sass-loader',
                         options: {
@@ -101,7 +107,18 @@ module.exports = {
                                 path.resolve(__dirname, './node_modules')
                             ]
                         }
-                    }
+                    },
+                    // {
+                    //     // Loader for webpack to process CSS with PostCSS
+                    //     loader: 'postcss-loader',
+                    //     options: {
+                    //         plugins: function () {
+                    //             return [
+                    //                 require('autoprefixer')
+                    //             ];
+                    //         }
+                    //     }
+                    // },
                 ],
                 include: helpers.root('src', 'assets')
             },
@@ -135,8 +152,15 @@ module.exports = {
                 ],
                 use: [
                     {
-                        loader: 'file-loader'
+                        loader: 'file-loader',
+                        options: {
+                            sourceMap: isDev,
+                            includePaths: [
+                                path.resolve(__dirname, './node_modules')
+                            ]
+                        }
                     },
+
                 ],
             },
             // {
