@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es2015",
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
@@ -9,11 +9,16 @@
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
         "lib": [
-            "es6",
+            "es2017",
             "dom"
         ],
         "typeRoots": [
             "node_modules/@types"
+        ],
+        "plugins": [
+            {
+                "name": "tslint-language-service"
+            }
         ]
     },
     "exclude": [
