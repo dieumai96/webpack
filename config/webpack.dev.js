@@ -1,7 +1,7 @@
 const path = require("path");
 const { ContextReplacementPlugin, NamedModulesPlugin, HotModuleReplacementPlugin } = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const helpers = require('./helpers');
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -59,12 +59,49 @@ module.exports = {
                 ],
                 exclude: [/node_modules/]
             },
+            // {
+            //     test: /\.s(a|c)ss$/,
+            //     use: [
+            //         {
+            //             loader: 'css-loader'
+            //         },
+
+            //         {
+            //             loader: 'sass-loader',
+            //             options: {
+            //                 includePaths: [
+            //                     path.resolve(__dirname, './node_modules')
+            //                 ]
+            //             }
+            //         }
+            //     ]
+            // },
+            // {
+            //     test: /\.css$/,
+            //     use: [
+            //         {
+            //             loader: 'style-loader'
+            //         },
+            //         {
+            //             loader: 'css-loader'
+
+            //         }
+            //     ]
+            // },
             {
                 test: /\.(css|scss|sass)$/,
                 use: [
                     { loader: 'style-loader', options: { sourceMap: isDev } },
                     { loader: 'css-loader', options: { sourceMap: isDev } },
-                    { loader: 'sass-loader', options: { sourceMap: isDev } }
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: isDev,
+                            includePaths: [
+                                path.resolve(__dirname, './node_modules')
+                            ]
+                        }
+                    }
                 ],
                 include: helpers.root('src', 'assets')
             },

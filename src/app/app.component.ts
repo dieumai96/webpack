@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'app-root',
     moduleId: module.id.toString(),
-    styles: [require('./app.component.scss').toString()],
-    template: require('./app.component.html'),
+    template: `<router-outlet></router-outlet>
+    `,
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
     name = 'Angular 7 & Webpack 4';
-    ngOnInit(){
+    a = 10;
+    ngOnInit() {
+        console.log(this.a);
     }
 }
