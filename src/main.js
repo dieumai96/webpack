@@ -13,7 +13,7 @@ require('./index.html');
 // require("node_modules/angular-tree-component/dist/angular-tree-component.css")
 // require("node_modules/pace-js/templates/pace-theme-flash.tmpl.css")
 // require("node_modules/leaflet/dist/leaflet.css")
-require("./app/@theme/styles/styles.scss")
+
 
 
 
