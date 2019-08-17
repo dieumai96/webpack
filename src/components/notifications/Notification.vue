@@ -9,7 +9,12 @@
       <Loading v-if="isLoading" />
       <md-table v-model="listData" md-card>
         <md-table-toolbar>
-          <h1 class="md-title">Notifications</h1>
+          <span class="md-title">Notifications</span>
+          <md-button
+            class="md-raised md-primary"
+            v-bind:style="{textTransform : 'capitalize'}"
+            @click="showDialog = true"
+          >Add notification</md-button>
         </md-table-toolbar>
 
         <md-table-row slot="md-table-row" slot-scope="{ item }">
@@ -39,7 +44,7 @@
             <li
               class="page-item page-item-number"
               v-bind:key="item.id"
-              v-for="(item,index) in renderPage.slice(0, 5)"
+              v-for="(item) in renderPage.slice(0, 5)"
             >
               <a
                 class="page-link"
@@ -58,6 +63,8 @@
         </nav>
       </div>
     </div>
+    <!-- //// -->
+    <AddNotification v-bind:showDialog="showDialog" @callbackDialog="showDialog = $event" />
   </div>
 
   <!-- <coma></coma>
@@ -70,14 +77,18 @@ import moment from "moment";
 import Config from "./../../config/serverConfig";
 import Url from "./../../config/apiUrl";
 import Loading from "./../shared/Loading.vue";
-import { timer, Subject } from "rxjs";
+import { timer, Subject, BehaviorSubject } from "rxjs";
 import { takeUntil, tap, skipWhile } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
+import AddNotification from "./form-add-notification.vue";
+import { messageService } from "./../../services/app-service";
 export default {
   name: "Notification",
   components: {
-    Loading
+    Loading,
+    AddNotification
   },
+
   data() {
     return {
       isLoading: Boolean,
@@ -89,7 +100,8 @@ export default {
       renderPage: [],
       renderTempPage: [],
       uploadPercentage: 0,
-      clearSub$: new Subject(false)
+      clearSub$: new Subject(false),
+      showDialog: false
     };
   },
   filters: {
@@ -103,6 +115,12 @@ export default {
     }
   },
   created() {
+    messageService.getCallBackCloseModal().subscribe(message => {
+      if (message != null) {
+        console.log(message);
+      } else {
+      }
+    });
     this.onSearch(1, {}, "first", null);
   },
   destroyed() {
@@ -111,6 +129,7 @@ export default {
   },
   methods: {
     onSearch: function(page, searchObject, order, typeSearch) {
+      this.uploadPercentage = 0;
       this.isLoading = true;
       this.pageNow = page;
       this.isLoading = true;
@@ -213,6 +232,9 @@ export default {
 
 
 <style  scoped >
+md-button.md-raised {
+  text-transform: capitalize;
+}
 .container-fluid {
   display: flex;
   align-items: center;
