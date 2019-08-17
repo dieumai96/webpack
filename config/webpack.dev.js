@@ -1,6 +1,7 @@
 const path = require("path");
-const webpack = require('webpack');
+const { HotModuleReplacementPlugin } = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
     entry: {
         main: ["./src/main.js"]
@@ -19,6 +20,14 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                use: [
+                    {
+                        loader: "vue-loader"
+                    }
+                ]
+            },
+            {
                 test: /\.js$/,
                 use: [
                     {
@@ -28,13 +37,31 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
+                test: /\.s(a|c)ss$/,
+                use: [
+                    {
+                        loader: 'css-loader'
+                    },
+
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            includePaths: [
+                                path.resolve(__dirname, './node_modules')
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
                 test: /\.css$/,
                 use: [
                     {
-                        loader: "style-loader"
+                        loader: 'style-loader'
                     },
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader'
+
                     }
                 ]
             },
@@ -68,9 +95,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(), 
+        new VueLoaderPlugin(),
+        new HotModuleReplacementPlugin(),
         new HTMLWebpackPlugin({
-            template : "./src/index.html",
+            template: "./src/index.html",
         })
     ]
 }

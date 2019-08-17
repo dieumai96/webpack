@@ -1,7 +1,11 @@
 require("babel-runtime/regenerator");
-require('react-hot-loader/patch');
 require('babel-register');
 require('webpack-hot-middleware/client?reload=true');
-require('./main.css');
+
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// require('./images/image.jpg')
+// require('./main.css');
 require('./index.html');
 require('./app');
