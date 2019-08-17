@@ -6,3 +6,7 @@
 body,html{
     font-family: 'Muli', sans-serif;
 }
+.md-app-content{
+    padding: 0 !important;
+}
+/* loading  */
