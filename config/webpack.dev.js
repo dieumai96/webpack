@@ -1,7 +1,8 @@
 const path = require("path");
-const { HotModuleReplacementPlugin } = require('webpack');
+const { HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
+
 module.exports = {
     entry: {
         main: ["./src/main.js"]
@@ -99,6 +100,10 @@ module.exports = {
         new HotModuleReplacementPlugin(),
         new HTMLWebpackPlugin({
             template: "./src/index.html",
+        }),
+        new ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
         })
     ]
 }

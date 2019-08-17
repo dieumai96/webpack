@@ -4,6 +4,8 @@ import path from 'path';
 const server = express();
 const webpack = require('webpack');
 const config = require('./../../config/webpack.dev');
+const history = require('connect-history-api-fallback');
+
 const compler = webpack(config);
 
 const webpackDevMiddleware = require('webpack-dev-middleware')(
@@ -12,7 +14,9 @@ const webpackDevMiddleware = require('webpack-dev-middleware')(
 )
 
 const webpackHotMiddleware = require('webpack-hot-middleware')(compler);
-
+server.use(history({
+    index: '/' 
+}));
 server.use(webpackDevMiddleware);
 server.use(webpackHotMiddleware);
 const staticMiddleware = express.static("dist");

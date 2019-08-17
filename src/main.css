@@ -1,24 +1,8 @@
-body{
-   margin: 0;
-   background-color: red
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,600i,700,700i&display=swap');
+*{
+    padding: 0;
+    margin: 0;
 }
-.profile{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column;
-}
-
-img{
-    border-radius: 50%;
-    width: 300px;
-    box-shadow: 0 0 20px black;
-}
-
-h1{
-    color: white;
-    font-size: 5em;
-    font-family: sans-serif;
-    text-shadow: 0 0 20px black;
+body,html{
+    font-family: 'Muli', sans-serif;
 }
