@@ -92,6 +92,7 @@ export default {
             if (res.data.status == 0) {
               let { token } = res.data;
               console.log(token);
+              localStorage.setItem('token',token);
               this.$router.push({ path: "/dashboard/notification" });
             } else {
               alert("Thông tin đăng nhập không chính xác");

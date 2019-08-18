@@ -17,7 +17,7 @@
         </div>
 
         <div class="md-toolbar-row md-toolbar-offset">
-          <span class="md-display-1">My Title</span>
+          <span class="md-display-1">VUEJS</span>
         </div>
       </md-app-toolbar>
 

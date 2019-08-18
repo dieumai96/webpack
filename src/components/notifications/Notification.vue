@@ -117,7 +117,7 @@ export default {
   created() {
     messageService.getCallBackCloseModal().subscribe(message => {
       if (message != null) {
-        console.log(message);
+        this.onSearch(1, {}, "first", null);
       } else {
       }
     });
