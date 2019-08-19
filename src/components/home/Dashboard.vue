@@ -12,7 +12,10 @@
           <router-link class="nav-link" to="/dashboard/directive">Directive</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <router-link class="nav-link" to="/dashboard/style">Style</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/dashboard/life-cycle">Life cycle</router-link>
         </li>
       </ul>
     </nav>

@@ -10,6 +10,8 @@ import Dashboard from './components/home/Dashboard.vue';
 import InputOutput from './components/input-output/input-output.vue';
 import Computed from './components/computed/computed.vue'
 import Directive from './components/directive/directive.vue';
+import Style from './components/styles/style.vue';
+import LifeCycle from './components/lifecycle/life-cycle.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +37,17 @@ export default new Router({
                     component: Directive,
                     name: 'directive',
                 },
+                {
+                    path: 'style',
+                    component: Style,
+                    name: 'style',
+                },
+                {
+                    path: 'life-cycle',
+                    component: LifeCycle,
+                    name: 'life-cycle',
+                },
+
             ]
         },
         {

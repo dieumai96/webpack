@@ -4,7 +4,7 @@
     <button class="btn btn-danger" @click="name = 'Dao Thi Lien Hoai'">Change name</button>
     <br />
     <span>{{count}}</span>
-    <button class="btn btn-primary" @click="count++">Increment</button>
+    <button class="btn btn-primary" @click="increment">Increment</button>
   </div>
 </template>
 
@@ -17,10 +17,9 @@ export default {
       count: 1
     };
   },
-  // computed method không nhận cặp dấu () đăng sau. Nên không thể truyền tham số đầu vào, nên nó chỉ nhận được dữ liệu có sẵn bên trong component
-  // computed sẽ tính toán lại các biến phụ thuộc vào trong nó thay đổi. Còn method sẽ tính toán  lại các biến khi mà nó được gọi
   computed: {
     reversedMessage() {
+      console.log("Run.....");
       return this.name
         .split(" ")
         .reverse()
@@ -29,7 +28,11 @@ export default {
   },
   methods: {
     changeName() {
+      console.log("Run in methods");
       return this.name;
+    },
+    increment() {
+      this.count++;
     }
   }
 };

@@ -10,7 +10,7 @@
         <Child1 :userInfomation="user1" v-on:changeUse1="user1 = $event" />
       </div>
       <div class="col-md-4">
-        <Child2 :userInfomation="user2" v-on:changeUse2="user2 = $event"/>
+        <Child2 :userInfomation="user2" v-on:changeUse2="user2 = $event" />
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang = "scss" scope>
+<style lang = "scss" scoped>
 span.infomation {
   color: red;
   font-size: 20px;

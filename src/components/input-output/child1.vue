@@ -1,6 +1,7 @@
 <template>
   <div class="card" style="width: 18rem;">
     <div class="card-body">
+      <span class="infomation">abcccc</span>
       <h5 class="card-title">Child 1</h5>
       <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
       <p
@@ -25,16 +26,10 @@ export default {
   },
   methods: {
     changeInfomation() {
-      (this.userInfomation.name = "Nguyen Van A"),
-        (this.userInfomation.age = "25");
+      this.userInfomation.name = "Nguyen Van A";
+      this.userInfomation.age = "25";
       this.$emit("changeUse1", this.userInfomation);
     }
   }
 };
 </script>
-
-<style lang = "scss" scope>
-button {
-  margin-top: 10px;
-}
-</style>
