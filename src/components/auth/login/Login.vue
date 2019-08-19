@@ -42,7 +42,7 @@
                 type="submit"
                 value="Login"
                 :disabled="!phone || !password"
-                @click="onLogin"
+                @click.prevent="onLogin"
                 class="btn float-right login_btn"
               />
             </div>
@@ -78,7 +78,7 @@ export default {
   methods: {
     onLogin(e) {
       this.isLoaing = true;
-      e.preventDefault();
+      // e.preventDefault(); 
       let body = {
         phone: this.phone,
         password: this.password

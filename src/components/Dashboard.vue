@@ -27,7 +27,7 @@
         <md-list>
           <md-list-item>
             <md-icon>move_to_inbox</md-icon>
-            <span class="md-list-item-text">Inbox</span>
+            <span class="md-list-item-text" @click="goToTest">Inbox</span>
           </md-list-item>
 
           <md-list-item>
@@ -60,7 +60,17 @@ export default {
   components: {},
   data: () => ({
     menuVisible: false
-  })
+  }),
+  methods: {
+    goToTest() {
+      this.$router.push({
+        path: "/dashboard/test-params",
+        query : {
+          id : '123',
+        }
+      });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

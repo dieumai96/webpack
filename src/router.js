@@ -5,16 +5,18 @@ import Dashboard from './components/Dashboard.vue';
 import Login from './components/auth/login/Login.vue';
 import Contact from './components/contact/Contact.vue';
 import About from './components/about/About.vue';
+import TestParams from './components/params/TestParams.vue';
 Vue.use(Router)
 
 export default new Router({
-    mode : 'history',
+    mode: 'history',
     routes: [
         {
             path: '/login',
             component: Login,
             name: 'login',
         },
+
         {
             path: '/dashboard',
             component: Dashboard,
@@ -36,9 +38,14 @@ export default new Router({
                     component: About
                 },
                 {
-                    path : '/',
-                    redirect : '/notification',
-                    component : Notification
+                    path: 'test-params',
+                    name: 'TestParams',
+                    component: TestParams,
+                },
+                {
+                    path: '/',
+                    redirect: '/notification',
+                    component: Notification
                 }
             ]
         },
