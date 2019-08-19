@@ -1,59 +1,87 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Notification from './components/notifications/Notification.vue'
-import Dashboard from './components/Dashboard.vue';
-import Login from './components/auth/login/Login.vue';
-import Contact from './components/contact/Contact.vue';
-import About from './components/about/About.vue';
-import TestParams from './components/params/TestParams.vue';
+// import Notification from './components/notifications/Notification.vue'
+// import Dashboard from './components/Dashboard.vue';
+// import Login from './components/auth/login/Login.vue';
+// import Contact from './components/contact/Contact.vue';
+// import About from './components/about/About.vue';
+// import TestParams from './components/params/TestParams.vue';
+import Dashboard from './components/home/Dashboard.vue';
+import InputOutput from './components/input-output/input-output.vue';
+import Computed from './components/computed/computed.vue'
+import Directive from './components/directive/directive.vue';
 Vue.use(Router)
 
 export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/login',
-            component: Login,
-            name: 'login',
-        },
-
-        {
             path: '/dashboard',
             component: Dashboard,
-            name: Dashboard,
+            name: 'Dashboard',
             children: [
                 {
-                    path: 'notification',
-                    component: Notification,
-                    name: 'notification',
+                    path: 'input-output',
+                    component: InputOutput,
+                    name: 'input-output',
                 },
                 {
-                    path: 'contact',
-                    name: 'contact',
-                    component: Contact
+                    path: 'computed',
+                    component: Computed,
+                    name: 'computed',
                 },
                 {
-                    path: 'about',
-                    name: 'about',
-                    component: About
+                    path: 'directive',
+                    component: Directive,
+                    name: 'directive',
                 },
-                {
-                    path: 'test-params',
-                    name: 'TestParams',
-                    component: TestParams,
-                },
-                {
-                    path: '/',
-                    redirect: '/notification',
-                    component: Notification
-                }
             ]
         },
         {
             path: '/',
-            redirect: "/login",
-            name: 'login',
-            component: Login
+            redirect: "/dashboard",
+            name: 'Dashboard',
+            component: Dashboard
         }
+        // {
+        //     path: '/login',
+        //     component: Login,
+        //     name: 'login',
+        // },
+
+        // {
+        //     path: '/dashboard',
+        //     component: Dashboard,
+        //     name: Dashboard,
+        //     children: [
+        //         {
+        //             path: 'notification',
+        //             component: Notification,
+        //             name: 'notification',
+        //         },
+        //         {
+        //             path: 'contact',
+        //             name: 'contact',
+        //             component: Contact
+        //         },
+        //         {
+        //             path: 'about',
+        //             name: 'about',
+        //             component: About
+        //         },
+        //         {
+        //             path: 'test-params',
+        //             name: 'TestParams',
+        //             component: TestParams,
+        //         },
+        //         {
+        //             path: '/',
+        //             redirect: '/notification',
+        //             component: Notification
+        //         }
+        //     ]
+        // },
+
+
     ]
 })
