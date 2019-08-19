@@ -65,6 +65,7 @@
     </div>
     <!-- //// -->
     <AddNotification v-bind:showDialog="showDialog" @callbackDialog="showDialog = $event" />
+    <SelectBuilding :showModalSelectBuilding="true" />
   </div>
 
   <!-- <coma></coma>
@@ -82,11 +83,14 @@ import { takeUntil, tap, skipWhile } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 import AddNotification from "./form-add-notification.vue";
 import { messageService } from "./../../services/app-service";
+import { eventBusService } from "./eventBus";
+import SelectBuilding from "./Select-Building.vue";
 export default {
   name: "Notification",
   components: {
     Loading,
-    AddNotification
+    AddNotification,
+    SelectBuilding
   },
 
   data() {
@@ -101,7 +105,8 @@ export default {
       renderTempPage: [],
       uploadPercentage: 0,
       clearSub$: new Subject(false),
-      showDialog: false
+      showDialog: false,
+      showModalSelectBuilding: false
     };
   },
   filters: {
@@ -115,10 +120,9 @@ export default {
     }
   },
   created() {
-    messageService.getCallBackCloseModal().subscribe(message => {
-      if (message != null) {
-        this.onSearch(1, {}, "first", null);
-      } else {
+    eventBusService.getCallBackCloseModal().subscribe(res => {
+      if (res) {
+        this.showModalSelectBuilding = true;
       }
     });
     this.onSearch(1, {}, "first", null);

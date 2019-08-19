@@ -47,14 +47,15 @@
       <md-button class="md-primary" @click="closeModal('do-nothing')">Close</md-button>
       <md-button class="md-primary" @click="closeModal('create')">Save</md-button>
     </md-dialog-actions>
-    <SelectBuilding v-if="selectType == 2" :showModalSelectBuilding="true" />
+   
   </md-dialog>
 </template>
 
 <script>
 // import AppService from "./../../services/app-service";
 import { messageService } from "./../../services/app-service";
-import SelectBuilding from "./Select-Building.vue";
+
+import { eventBusService } from "./eventBus";
 import uuid from "uuid";
 export default {
   name: "AddNotification",
@@ -77,7 +78,7 @@ export default {
       selectType: 1
     };
   },
-  components: {SelectBuilding},
+  components: {  },
   methods: {
     closeModal(event) {
       console.log(event);
@@ -98,6 +99,7 @@ export default {
       if (event.target.value == 2) {
         this.selectType = 2;
         this.showModalSelectBuilding = true;
+        eventBusService.sendCallBackCloseModal(true);
       }
     },
     onChangeFile(event) {
