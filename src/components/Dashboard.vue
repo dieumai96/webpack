@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <md-app md-waterfall md-mode="flexible">
+    <md-app md-waterfall md-mode="fixed-last" md-scrollbar="false">
       <md-app-toolbar class="md-large md-primary">
         <div class="md-toolbar-row">
           <div class="md-toolbar-section-start">
@@ -65,8 +65,8 @@ export default {
     goToTest() {
       this.$router.push({
         path: "/dashboard/test-params",
-        query : {
-          id : '123',
+        query: {
+          id: "123"
         }
       });
     }

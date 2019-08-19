@@ -9,6 +9,18 @@
               <input type="text" class="form-control" name id />
             </div>
           </div>
+          <div class="col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="input-title">Content</label>
+              <textarea name id class="form-control" cols="30" rows="6"></textarea>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12">
+            <div class="upload-btn-wrapper">
+              <button class="btn">Upload a file</button>
+              <input type="file" name="myfile" @change="onChangeFile" multiple />
+            </div>
+          </div>
         </div>
       </md-tab>
     </md-tabs>
@@ -42,6 +54,9 @@ export default {
           break;
         }
       }
+    },
+    onChangeFile(event){
+      
     }
   }
 };
@@ -50,10 +65,36 @@ export default {
 
 <style  scoped lang = "scss">
 .form-group {
-  font-family: 'Muli',sans-serif;
-  input{
+  font-family: "Muli", sans-serif;
+  input {
     outline: none;
     border-radius: 0px;
   }
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  height: 100px;
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 </style>
