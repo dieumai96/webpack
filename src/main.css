@@ -9,4 +9,7 @@ body,html{
 .md-app-content{
     padding: 0 !important;
 }
+.md-menu-content{
+    z-index: 111 !important;
+  }
 /* loading  */

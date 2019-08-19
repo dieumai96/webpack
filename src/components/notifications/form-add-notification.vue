@@ -21,6 +21,24 @@
               <input type="file" name="myfile" @change="onChangeFile" multiple />
             </div>
           </div>
+          <div class="col-md-12 col">
+            <ul class="list-files">
+              <li v-for="(item,index) in listFile" :key="index">
+                <span>{{item.file.name | textPipe}}</span>
+                <i class="fa fa-times" aria-hidden="true" @click="removeFromList(item.id)"></i>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for>Select scope</label>
+              <select name class="form-control" id @change="selectScope($event)">
+                <option value="1">All</option>
+                <option value="2">Building</option>
+                <option value="3">Flat</option>
+              </select>
+            </div>
+          </div>
         </div>
       </md-tab>
     </md-tabs>
@@ -29,16 +47,37 @@
       <md-button class="md-primary" @click="closeModal('do-nothing')">Close</md-button>
       <md-button class="md-primary" @click="closeModal('create')">Save</md-button>
     </md-dialog-actions>
+    <SelectBuilding v-if="selectType == 2" :showModalSelectBuilding="true" />
   </md-dialog>
 </template>
 
 <script>
 // import AppService from "./../../services/app-service";
 import { messageService } from "./../../services/app-service";
-
+import SelectBuilding from "./Select-Building.vue";
+import uuid from "uuid";
 export default {
   name: "AddNotification",
   props: ["showDialog"],
+  data() {
+    return {
+      listFile: [],
+      selectedCountry: null,
+      countries: [
+        "Algeria",
+        "Argentina",
+        "Brazil",
+        "Canada",
+        "Italy",
+        "Japan",
+        "United Kingdom",
+        "United States"
+      ],
+      showModalSelectBuilding: false,
+      selectType: 1
+    };
+  },
+  components: {SelectBuilding},
   methods: {
     closeModal(event) {
       console.log(event);
@@ -55,8 +94,42 @@ export default {
         }
       }
     },
-    onChangeFile(event){
-      
+    selectScope(event) {
+      if (event.target.value == 2) {
+        this.selectType = 2;
+        this.showModalSelectBuilding = true;
+      }
+    },
+    onChangeFile(event) {
+      let target = event.target || event.srcElement;
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.listFile.push({
+          id: uuid.v4(),
+          file: event.target.files[i]
+        });
+      }
+      console.log(this.listFile);
+      target.value = "";
+    },
+    removeFromList(id) {
+      this.listFile = this.listFile.filter(x => x.id != id);
+    }
+  },
+  filters: {
+    textPipe(args) {
+      let length = args.length;
+      let splice = "";
+      if (length < 40) {
+        splice = args;
+      } else {
+        splice = args.substr(0, 20) + "...";
+      }
+      return splice;
+    }
+  },
+  computed: {
+    receiveValueSelect() {
+      return this.selectedCountry;
     }
   }
 };
@@ -96,5 +169,18 @@ export default {
   top: 0;
   opacity: 0;
   cursor: pointer;
+}
+.list-files {
+  list-style: none;
+  margin: 10px;
+  i {
+    color: red;
+    cursor: pointer;
+  }
+}
+
+span {
+  font-family: "Muli", sans-serif;
+  color: #5d66dd;
 }
 </style>
