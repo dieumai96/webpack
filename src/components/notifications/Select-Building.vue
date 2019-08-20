@@ -1,28 +1,17 @@
 <template>
   <md-dialog :md-active.sync="showModalSelectBuilding" :md-click-outside-to-close="false">
-    <md-dialog-title>Preferences</md-dialog-title>
-
-    <md-tabs md-dynamic-height>
-      <md-tab md-label="General">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-      </md-tab>
-
-      <md-tab md-label="Activity">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-      </md-tab>
-
-      <md-tab md-label="Account">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-      </md-tab>
-    </md-tabs>
-
+    <md-dialog-title>Select building</md-dialog-title>
+    <md-dialog-content>
+      <div class="row" :style="{width : '700px'}" v-if="!isLoading">
+        <div class="col-md-12">
+          <ul>
+            <li v-for="(item,index) in buildingInfo.blocks" :key="index">
+              <md-checkbox v-model="array" @change="onChangeStatus($event,item)">{{item}}</md-checkbox>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </md-dialog-content>
     <md-dialog-actions>
       <md-button class="md-primary" @click="showDialog = false">Close</md-button>
       <md-button class="md-primary" @click="showDialog = false">Save</md-button>
@@ -45,9 +34,12 @@ export default {
   },
   data() {
     return {
-      buildingInfo: {}
+      buildingInfo: {},
+      isLoading: true,
+      array: []
     };
   },
+  beforeCreate() {},
   created() {
     let token = ThirdParty.getToken();
     let decoded = jwtDecode(token);
@@ -61,11 +53,29 @@ export default {
         Authorization: Config.TOKEN
       },
       body
-    }).subscribe(data => console.log(data));
+    }).subscribe(data => {
+      this.isLoading = false;
+      console.log(data.response);
+      if (data.response) {
+        if (data.response.status == 0) {
+          this.buildingInfo = data.response.data;
+        }
+      }
+    });
+  },
+  methods : {
+     onChangeStatus(event,item){
+       console.log(item);
+     }
   },
   name: "SelectBuilding"
 };
 </script>
 
-<style>
+<style scoped lang = "scss">
+ul {
+  li {
+    list-style: none;
+  }
+}
 </style>
