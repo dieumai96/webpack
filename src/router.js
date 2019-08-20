@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import Notification from './components/notifications/Notification.vue'
 // import Dashboard from './components/Dashboard.vue';
-// import Login from './components/auth/login/Login.vue';
+import Login from './components/auth/login/Login.vue';
 // import Contact from './components/contact/Contact.vue';
 // import About from './components/about/About.vue';
-// import TestParams from './components/params/TestParams.vue';
+import TestParams from './components/params/TestParams.vue';
+import ParamsByRoute from './components/params/ParamsByRoute.vue';
 import Dashboard from './components/home/Dashboard.vue';
 import InputOutput from './components/input-output/input-output.vue';
 import Computed from './components/computed/computed.vue'
@@ -47,20 +48,30 @@ export default new Router({
                     component: LifeCycle,
                     name: 'life-cycle',
                 },
-
+                {
+                    path: 'test-params',
+                    name: 'TestParams',
+                    component: TestParams,
+                },
+                {
+                    path: 'params-by-router/:id',
+                    name: 'ParamsByRoute',
+                    component: ParamsByRoute,
+                },
             ]
         },
         {
+            path: '/login',
+            component: Login,
+            name: 'login',
+        },
+        {
             path: '/',
-            redirect: "/dashboard",
-            name: 'Dashboard',
-            component: Dashboard
+            redirect: "/login",
+            name: 'login',
+            component: Login
         }
-        // {
-        //     path: '/login',
-        //     component: Login,
-        //     name: 'login',
-        // },
+
 
         // {
         //     path: '/dashboard',
