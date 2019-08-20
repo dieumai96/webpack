@@ -1,5 +1,5 @@
 <template>
-  <md-dialog :md-active.sync="showModalSelectBuilding">
+  <md-dialog :md-active.sync="showModalSelectBuilding" :md-click-outside-to-close="false">
     <md-dialog-title>Preferences</md-dialog-title>
 
     <md-tabs md-dynamic-height>
@@ -35,7 +35,7 @@ import { ajax } from "rxjs/ajax";
 import Config from "./../../config/serverConfig";
 import Url from "./../../config/apiUrl";
 import { ThirdParty } from "./../../third-party/third-party";
-import * as JWT from "jwt-decode";
+var jwtDecode = require("jwt-decode");
 export default {
   props: {
     showModalSelectBuilding: {
@@ -50,7 +50,7 @@ export default {
   },
   created() {
     let token = ThirdParty.getToken();
-    let decoded = JWT(token);
+    let decoded = jwtDecode(token);
     let body = {
       buildingID: decoded.buildingID
     };

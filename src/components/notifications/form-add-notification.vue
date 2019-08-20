@@ -1,5 +1,5 @@
 <template>
-  <md-dialog :md-active.sync="showDialog" class="dialogParent">
+  <md-dialog :md-active.sync="showDialog" class="dialogParent" :md-click-outside-to-close = "false">
     <md-tabs md-dynamic-height>
       <md-tab md-label="Create notification">
         <div class="row" :style="{width : '600px'}">
