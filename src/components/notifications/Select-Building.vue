@@ -31,12 +31,37 @@
 </template>
 
 <script>
+import { ajax } from "rxjs/ajax";
+import Config from "./../../config/serverConfig";
+import Url from "./../../config/apiUrl";
+import { ThirdParty } from "./../../third-party/third-party";
+import * as JWT from "jwt-decode";
 export default {
   props: {
     showModalSelectBuilding: {
       type: Boolean,
       required: true
     }
+  },
+  data() {
+    return {
+      buildingInfo: {}
+    };
+  },
+  created() {
+    let token = ThirdParty.getToken();
+    let decoded = JWT(token);
+    let body = {
+      buildingID: decoded.buildingID
+    };
+    ajax({
+      url: `${Config.API_ENDPOINT}/${Url.GET_BUILDING_INFOMATION}`,
+      method: "POST",
+      headers: {
+        Authorization: Config.TOKEN
+      },
+      body
+    }).subscribe(data => console.log(data));
   },
   name: "SelectBuilding"
 };
