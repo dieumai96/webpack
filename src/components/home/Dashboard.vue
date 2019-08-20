@@ -42,6 +42,7 @@ export default {
     onLogout() {
       localStorage.clear();
       this.$router.push({ path: "/login" });
+     
     }
   },
   beforeRouteEnter(to, from, next) {

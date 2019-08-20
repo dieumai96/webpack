@@ -63,7 +63,7 @@ export default new Router({
         {
             path: '/login',
             component: Login,
-            name: 'login',
+            name: 'loginPage',
         },
         {
             path: '/',
