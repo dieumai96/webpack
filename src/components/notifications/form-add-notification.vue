@@ -1,5 +1,5 @@
 <template>
-  <md-dialog :md-active.sync="showDialog">
+  <md-dialog :md-active.sync="showDialog" class="dialogParent">
     <md-tabs md-dynamic-height>
       <md-tab md-label="Create notification">
         <div class="row" :style="{width : '600px'}">
@@ -47,15 +47,15 @@
       <md-button class="md-primary" @click="closeModal('do-nothing')">Close</md-button>
       <md-button class="md-primary" @click="closeModal('create')">Save</md-button>
     </md-dialog-actions>
-   
+    <SelectBuilding v-if="selectType == 2" :showModalSelectBuilding="true" />
   </md-dialog>
 </template>
 
 <script>
 // import AppService from "./../../services/app-service";
 import { messageService } from "./../../services/app-service";
+import SelectBuilding from "./Select-Building.vue";
 
-import { eventBusService } from "./eventBus";
 import uuid from "uuid";
 export default {
   name: "AddNotification",
@@ -78,7 +78,7 @@ export default {
       selectType: 1
     };
   },
-  components: {  },
+  components: { SelectBuilding },
   methods: {
     closeModal(event) {
       console.log(event);
@@ -97,9 +97,12 @@ export default {
     },
     selectScope(event) {
       if (event.target.value == 2) {
+        $(".dialogParent").css("display", "none");
         this.selectType = 2;
         this.showModalSelectBuilding = true;
-        eventBusService.sendCallBackCloseModal(true);
+      }
+      if (event.target.value == 3) {
+        $(".dialogParent").css("display", "none");
       }
     },
     onChangeFile(event) {
