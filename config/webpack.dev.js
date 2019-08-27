@@ -1,7 +1,10 @@
 const path = require("path");
 const { HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const isDev = process.env.NODE_ENV !== 'production';
+
 const helpers = require('./helpers');
 module.exports = {
     entry: {
@@ -64,33 +67,26 @@ module.exports = {
                 exclude: [/node_modules/]
             },
             {
-                test: /\.s(a|c)ss$/,
+                test: /\.css$/,
                 use: [
-                    'vue-style-loader',
-                    {
-                        loader: 'css-loader'
-                    },
-
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            includePaths: [
-                                path.resolve(__dirname, './node_modules')
-                            ]
-                        }
-                    }
+                    isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
                 ]
             },
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-
-                    }
+                    isDev ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    { loader: 'sass-loader', options: { sourceMap: isDev } }
+                ]
+            },
+            {
+                test: /\.sass$/,
+                use: [
+                    isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
+                    { loader: 'css-loader', options: { sourceMap: isDev } },
+                    { loader: 'sass-loader', options: { sourceMap: isDev } }
                 ]
             },
             {
