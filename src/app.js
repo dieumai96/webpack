@@ -1,17 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
+require("babel-runtime/regenerator");
+require('babel-register');
+require('webpack-hot-middleware/client?reload=true');
 
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
-import store from './store';
-Vue.use(VueMaterial)
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import router from './router';
-Vue.config.productionTip = false
-
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app')
+// require('./images/image.jpg')
+require('./main.css');
+require('./index.html');
+require('./main');
