@@ -2,7 +2,7 @@ const path = require("path");
 const { HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
-
+const helpers = require('./helpers');
 module.exports = {
     entry: {
         main: ["./src/app.js"]
@@ -13,6 +13,10 @@ module.exports = {
         path: path.resolve(__dirname, "../dist"),
         publicPath: "/"
     },
+    resolve: {
+        // Add `.ts` and `.tsx` as a resolvable extension.
+        extensions: [".ts", ".tsx", ".js"]
+    },
     devServer: {
         contentBase: "dist",
         overlay: true,
@@ -22,11 +26,21 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                use: [
-                    {
-                        loader: "vue-loader"
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        ts: [
+                            {
+                                loader: 'ts-loader',
+                                options: {
+                                    appendTsSuffixTo: [/\.vue$/]
+                                }
+                            }]
+                    },
+                    options: {
+                        esModule: true
                     }
-                ]
+                }
             },
             {
                 test: /\.js$/,
@@ -36,6 +50,18 @@ module.exports = {
                     }
                 ],
                 exclude: /node_modules/
+            },
+            {
+                test: /\.ts$/,
+                loaders: [
+                    {
+                        loader: 'awesome-typescript-loader',
+                        options: {
+                            configFileName: helpers.root('tsconfig.json')
+                        }
+                    },
+                ],
+                exclude: [/node_modules/]
             },
             {
                 test: /\.s(a|c)ss$/,

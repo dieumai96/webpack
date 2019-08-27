@@ -8,4 +8,4 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // require('./images/image.jpg')
 require('./main.css');
 require('./index.html');
-require('./main');
+require('./main.ts');
