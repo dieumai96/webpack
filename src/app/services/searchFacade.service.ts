@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { SearchState, SearchCriteria } from '../model/ticketFacade';
-import { map, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { map, startWith, debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { TicketService } from './ticket.service';
 
@@ -25,7 +25,7 @@ export class SearchFacade {
         map(state => state.criteria),
     )
 
-    updateCriterial(ticket: string, status: number) {
+    updateCriterial(ticket?: string, status?: number) {
         const criteria = { ...this.state.criteria, status, ticket };
         this.dispatch.next(
             (this.state = {
@@ -62,10 +62,16 @@ export class SearchFacade {
     ) {
         const criteria = this.state.criteria;
         searchBy$ = searchBy$.pipe(debounceTime(debounceT), distinctUntilChanged(), startWith(criteria.ticket),
+            filter(x => x.length > 0)
         )
-        status$ = status$.pipe(debounceTime(debounceT), distinctUntilChanged(), startWith(criteria.status))
+        status$ = status$.pipe(debounceTime(debounceT), distinctUntilChanged(), startWith(criteria.status),
+            filter(x => typeof x == 'number')
+        )
         combineLatest(searchBy$, status$).pipe(
             switchMap(([ticket, status]) => {
+                console.log(ticket, status);
+                // update state with new ticket and status;
+                // status and ticket is not required 
                 this.updateCriterial(ticket, status);
                 const haveCriteria = ticket.length || status;
                 return !haveCriteria ? of([]) : this.ticketService.searchTicket(ticket, status)

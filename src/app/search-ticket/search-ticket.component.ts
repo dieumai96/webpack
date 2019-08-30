@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TicketService } from '../services/ticket.service';
-import { debounceTime, distinctUntilChanged, startWith, switchMap, tap, map, take } from 'rxjs/operators';
 import { SearchFacade } from '../services/searchFacade.service';
+import { take } from 'rxjs/operators';
 @Component({
     selector: 'app-search-ticket',
     moduleId: module.id.toString(),
@@ -21,18 +21,11 @@ export class SearchTicketComponent implements OnInit {
     }
     ngOnInit() {
         this.formSearch.valueChanges.subscribe(data => {
-            if (this.formSearch.controls.ticket.value != "" && this.formSearch.controls.status.value != "") {
-                this.facade.searchTickets(of(this.formSearch.controls.ticket.value), of(this.formSearch.controls.status.value));
-            }
-            if (this.formSearch.controls.ticket.value == "" && this.formSearch.controls.status.value != "") {
-                this.facade.searchStatus(of(this.formSearch.controls.status.value));
-            }
-            if (this.formSearch.controls.ticket.value != "" && this.formSearch.controls.status.value == "") {
-                this.facade.searchBytitle(of(this.formSearch.controls.title.value));
-            }
+            this.facade.searchTickets(of(data.ticket), of(data.status));
         })
         const initialTerm$ = this.facade.searchCreterial$.pipe(take(1));
         initialTerm$.subscribe(criterial => {
+            console.log("in component", criterial);
             this.searchTerm.patchValue(criterial, { emitEvent: false })
         })
 
