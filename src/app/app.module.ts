@@ -11,7 +11,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TicketService } from './services/ticket.service';
-import {MatInputModule} from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { SearchFacade } from './services/searchFacade.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +31,7 @@ import {MatInputModule} from '@angular/material';
         MatFormFieldModule,
         MatToolbarModule
     ],
-    providers: [CallApiService, TicketService],
+    providers: [CallApiService, TicketService, SearchFacade,UserService],
     bootstrap: [
         AppComponent
     ]

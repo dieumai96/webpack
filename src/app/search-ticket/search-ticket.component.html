@@ -1,16 +1,8 @@
-<mat-toolbar>
+<mat-toolbar [formGroup]="formSearch">
     <mat-form-field>
-
-        <input type="text" matInput placeholder="Find Tickets:" [formControl]="searchCriteria">
-
+        <input type="text" matInput placeholder="Find Tickets:" formControlName="ticket">
+    </mat-form-field>
+    <mat-form-field>
+        <input type="text" matInput placeholder="Find status:" formControlName="status">
     </mat-form-field>
 </mat-toolbar>
-<section class="ticket-search-results">
-
-    <a *ngFor="let result of tickets$ | async">
-        <div class="card">
-            <span>{{result.title}}</span>
-        </div>
-    </a>
-
-</section>

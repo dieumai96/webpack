@@ -18,6 +18,9 @@ export const Url = {
 
     // reflect
     GET_ALL_REFLECT: 'api/reflects/reflects4Employee',
+
+    // employee 
+    GET_ALL_EMPLOYEE: 'api/employee/getAllEmployee',
     // user 
     REGISTER_USER: 'api/user/register'
 }
